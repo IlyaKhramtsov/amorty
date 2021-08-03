@@ -3,7 +3,7 @@ import datetime
 
 from typing import Union, List
 
-from . import utils
+from loan_calculator import utils
 
 
 class LoanDate:
@@ -17,9 +17,9 @@ class LoanDate:
         return self._date
 
     @date.setter
-    def date(self, value: Union[str, datetime.date]):
-        if isinstance(value, (str, datetime.date)):
-            self._date = utils.convert_date(value)
+    def date(self, date: Union[str, datetime.date]):
+        if isinstance(date, (str, datetime.date)):
+            self._date = utils.convert_date(date)
         else:
             raise ValueError('Date must be string type or datetime.date type')
 

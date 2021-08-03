@@ -2,7 +2,7 @@ import datetime
 from abc import ABC, abstractmethod
 from typing import Union
 
-from date import LoanDate
+from loan_calculator.date import LoanDate
 
 class BaseLoan(ABC):
     """Abstract class for building different kinds of loans"""
@@ -38,7 +38,7 @@ class BaseLoan(ABC):
         else:
             raise ValueError("Interest rate must be int or float type and positive number")
 
-    @proterty
+    @property
     def period(self):
         return self._period
 
