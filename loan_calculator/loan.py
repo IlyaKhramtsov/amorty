@@ -59,9 +59,15 @@ class BaseLoan(ABC):
 
 class AnnuityLoan(BaseLoan):
 
-    def _get_monthly_interest(self) -> float:
+    def _calculate_monthly_interest(self) -> float:
         """Calculates monthly interest rate"""
         return self._rate / 1200
+
+    def get_annuity_payment(self) -> float:
+        monthly_rate = self._calculate_monthly_interest()
+        numerator = monthly_rate * (1 + monthly_rate) ** self._period
+        denominator = (1 + monthly_rate) ** self._period - 1
+        return self._amount * (numerator / denominator)
 
     def amortize(self):
         pass
