@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Union
 
 from loan_calculator.date import LoanDate
+from loan_calculator.utils import set_days_count
 
 class BaseLoan(ABC):
     """Abstract class for building different kinds of loans"""
@@ -56,6 +57,11 @@ class BaseLoan(ABC):
     def amortize(self):
         pass
 
+    def calculate_accured_interest(self, balance_reminder: int, day: datetime.timedelta, date: datetime.date):
+        interest_rate = self._rate
+        days_count = set_days_count(day, date)
+        return balance_reminder * interest_rate * days_count
+
 
 class AnnuityLoan(BaseLoan):
 
@@ -71,5 +77,4 @@ class AnnuityLoan(BaseLoan):
 
     def amortize(self):
         pass
-
 
