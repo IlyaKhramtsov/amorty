@@ -58,7 +58,7 @@ class BaseLoan(ABC):
         pass
 
     def _calculate_accrued_interest(self, balance_reminder: int, day: datetime.timedelta, date: datetime.date) -> float:
-        interest_rate = self._rate
+        interest_rate = self._rate / 100
         days_count = set_days_count(day, date)
         return balance_reminder * interest_rate * days_count
 
@@ -76,8 +76,23 @@ class AnnuityLoan(BaseLoan):
         return self._amount * (numerator / denominator)
 
     def _calculate_principal(self, accrued_interest: float) -> float:
-        return self.get_annuity_payment - accrued_interest
+        return self.get_annuity_payment() - accrued_interest
 
     def amortize(self):
-        pass
+        """The calculation of annuity payments on the loan"""
+        balance_reminder = self._amount
+        period = self._period
+        date = (x for x in self.date.get_working_dates())
+        day = (x for x in self.date.get_count_days())
+
+        while period:
+            accrued_interest = self._calculate_accrued_interest(balance_reminder, next(day), next(date))
+            principal = self._calculate_principal(accrued_interest)
+            balance_reminder -= principal
+            if period <= 1:
+                principal += balance_reminder
+                balance_reminder -= balance_reminder
+            payment = accrued_interest + principal
+            yield payment, balance_reminder, principal, accrued_interest
+            period -= 1
 
