@@ -27,5 +27,5 @@ def set_days_count(day: datetime.timedelta, date: datetime.date) -> float:
 
 def check_year_type(date: datetime.date) -> int:
     if calendar.isleap(date.year):
-        return DAYS_iN_YEAR["common year"]
-    return DAYS_IN_YEAR["leap year"]
+        return DAYS_iN_YEAR["leap year"]
+    return DAYS_IN_YEAR["common year"]
