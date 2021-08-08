@@ -102,5 +102,20 @@ class DifferentiatedLoan(BaseLoan):
         the principal amount is distributed over the period of payment in the equal installments;
         the loan interet accrued on the balance."""
 
+    def _calculate_principal(self) -> float:
+        return self._amount / self._period
+
     def amortize(self):
-        pass
+        """The calculation of payments for differentiated scheme of repayment."""
+        balance_reminder = self._amount
+        period = self._period
+        date = (x for x in self.date.get_working_dates())
+        day = (x for x in self.date.get_count_days())
+
+        while period:
+            accrued_interest = self._calculate_accrued_interest(balance_reminder, next(day), next(date))
+            principal = self._calculate_principal()
+            payment = principal + accrued_interest
+            balance_reminder -= principal
+            yield payment, balance_reminder, principal, accrued_interest
+            period -= 1
