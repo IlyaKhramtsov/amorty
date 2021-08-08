@@ -96,3 +96,11 @@ class AnnuityLoan(BaseLoan):
             yield payment, balance_reminder, principal, accrued_interest
             period -= 1
 
+
+class DifferentiatedLoan(BaseLoan):
+    """The differentiated payment method implies that:
+        the principal amount is distributed over the period of payment in the equal installments;
+        the loan interet accrued on the balance."""
+
+    def amortize(self):
+        pass
