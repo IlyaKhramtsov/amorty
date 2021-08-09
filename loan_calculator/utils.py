@@ -1,6 +1,7 @@
 import datetime
 import calendar
 import holidays
+from typing import Union, List
 
 
 DAYS_IN_YEAR = {
@@ -29,3 +30,9 @@ def check_year_type(date: datetime.date) -> int:
     if calendar.isleap(date.year):
         return DAYS_iN_YEAR["leap year"]
     return DAYS_IN_YEAR["common year"]
+
+def clear_days(days: List[Union[datetime.timedelta, List[datetime.timedelta]]]):
+    for day in days:
+        if isinstance(day, list):
+            yield (day[0] + day[1]).days
+        yield day.days
