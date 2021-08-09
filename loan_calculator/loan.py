@@ -1,9 +1,19 @@
 import datetime
 from abc import ABC, abstractmethod
-from typing import Union
+from typing import Union, List, NamedTuple
 
 from loan_calculator.date import LoanDate
-from loan_calculator.utils import set_days_count
+from loan_calculator.utils import set_days_count, clear_days
+
+
+class LoanDetails(NamedTuple):
+    date: List[datetime.date]
+    day: List[datetime.timedelta]
+    principal: List
+    interest: List
+    payment: List
+    balance: List
+
 
 class BaseLoan(ABC):
     """Abstract class for building different kinds of loans"""
@@ -61,6 +71,18 @@ class BaseLoan(ABC):
         interest_rate = self._rate / 100
         days_count = set_days_count(day, date)
         return balance_reminder * interest_rate * days_count
+
+    def create_loan(self):
+        loan_amortization = self.amortize()
+        dates = self.date.get_working_dates()
+        days = clear_days(self.date.get_count_days())
+
+        for date, day, (payment, balance, principal, interest) in zip(dates, days, loan_amortization):
+            loan_details = LoanDetails(date, day, principal, interest, payment, balance)
+            yield loan_details
+
+    def show_summary(self):
+        pass
 
 
 class AnnuityLoan(BaseLoan):
