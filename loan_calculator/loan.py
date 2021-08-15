@@ -7,15 +7,15 @@ from loan_calculator.utils import set_days_count, clear_days
 
 
 class LoanDetails(NamedTuple):
-    date: List[datetime.date]
-    day: List[datetime.timedelta]
-    principal: List
-    interest: List
-    payment: List
-    balance: List
+    date: list[datetime.date]
+    day: list[int]
+    principal: list[float]
+    interest: list[float]
+    payment: list[float]
+    balance: list[float]
 
 
-class BaseLoan(ABC):
+class Loan(ABC):
     """Abstract class for building different kinds of loans"""
 
     def __init__(self, amount: Union[int, float],
@@ -85,7 +85,7 @@ class BaseLoan(ABC):
         pass
 
 
-class AnnuityLoan(BaseLoan):
+class AnnuityLoan(Loan):
 
     def _calculate_monthly_interest(self) -> float:
         """Calculates monthly interest rate"""
@@ -119,7 +119,7 @@ class AnnuityLoan(BaseLoan):
             period -= 1
 
 
-class DifferentiatedLoan(BaseLoan):
+class DifferentiatedLoan(Loan):
     """The differentiated payment method implies that:
         the principal amount is distributed over the period of payment in the equal installments;
         the loan interet accrued on the balance."""
