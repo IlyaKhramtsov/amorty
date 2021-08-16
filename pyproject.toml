@@ -6,6 +6,9 @@ authors = ["Ilya <ilya.kramt@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+holidays = "^0.11.2"
+tabulate = "^0.8.9"
+XlsxWriter = "^3.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
