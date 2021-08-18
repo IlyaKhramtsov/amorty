@@ -1,9 +1,11 @@
+"""The main entry point"""
+
 import argparse
 from loan_calculator.loan import AnnuityLoan, DifferentiatedLoan
-from loan_calculator.loan_format import TableFormat, ExcelFormat, PDFFormat
+from loan_calculator.loan_format import TableFormat, ExcelFormat
 
 
-def main():
+def main() -> None:
     args = get_arguments()
     headers = ['Date', 'Day', 'Principal', 'Interest', 'Payment', 'Balance']
     loan_method = set_loan_method(args.method)
@@ -33,8 +35,6 @@ def set_format(format_name):
         return TableFormat
     elif format_name == 'excel':
         return ExcelFormat
-    elif format_name == 'pdf':
-        return PDFFormat
 
 def create_parser():
     """Creates a parser object"""
