@@ -30,10 +30,6 @@ class TableFormat(Format):
             )
 
 
-class PDFFormat:
-    pass
-
-
 class ExcelFormat(Format):
 
     def write(self):
@@ -42,7 +38,8 @@ class ExcelFormat(Format):
         with xlsxwriter.Workbook('loan.xlsx') as workbook:
             ws = workbook.add_worksheet()
             bold_font = workbook.add_format({'bold': True})
-            date_format = workbook.add_format({'num_format': 'mmmm d yyyy'})
+            date_format = workbook.add_format({'num_format': 'DD.MM.YYYY'})
+            money_format = workbook.add_format({'num_format': '#,##0.00'})
 
             for col, header in enumerate(headers):
                 ws.write_string(0, col, header, bold_font)
@@ -50,8 +47,8 @@ class ExcelFormat(Format):
             for row, loan in enumerate(loan_details, start=1):
                 ws.write(row, 0, loan.date, date_format)
                 ws.write(row, 1, loan.day)
-                ws.write(row, 2, loan.principal)
-                ws.write(row, 3, loan.interest)
-                ws.write(row, 4, loan.payment)
-                ws.write(row, 5, loan.balance)
+                ws.write(row, 2, loan.principal, money_format)
+                ws.write(row, 3, loan.interest, money_format)
+                ws.write(row, 4, loan.payment, money_format)
+                ws.write(row, 5, loan.balance, money_format)
 
