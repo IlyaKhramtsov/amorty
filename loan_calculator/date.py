@@ -2,20 +2,20 @@
 
 import calendar
 import datetime
+from typing import Union, Sequence, List
 
-from typing import Union
+import holidays
 
 from loan_calculator import utils
-
 
 class LoanDate:
     """LoanDate implements the dates of the loan payments.
 
     Attributes
     ----------
-    period: int, requared
-        Loan term (specified in mounths)
-    date : str, datetime.date, requared
+    period: int, required
+        Loan term (specified in months)
+    date : str, datetime.date, required
         Date of issue of the loan
 
     Methods
@@ -53,11 +53,20 @@ class LoanDate:
                 current_date.year, current_date.month
             )[1]
             current_date += datetime.timedelta(days=days_in_current_month)
-            dates.append(utils.check_date(current_date))
+            dates.append(self._set_working_date(current_date))
             period -= 1
         return dates
 
-    def get_count_days(self) -> list[datetime.timedelta]:
+    @staticmethod
+    def _set_working_date(date: datetime.date) -> datetime.date:
+        """Checks and return a date after a day off"""
+        while date.weekday() in holidays.WEEKEND or date in holidays.RUS():
+            date += datetime.timedelta(days=1)
+        return date
+
+    def get_count_days(
+        self,
+        ) -> Sequence[Union[datetime.timedelta, List[datetime.timedelta]]]:
         """Calculates the difference between dates in a list."""
         days = []
         dates = self.get_working_dates()
