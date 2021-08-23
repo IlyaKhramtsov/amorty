@@ -2,11 +2,12 @@
 
 import calendar
 import datetime
-from typing import Union, Sequence, List
+from typing import Union, List
 
 import holidays
 
 from loan_calculator import utils
+
 
 class LoanDate:
     """LoanDate implements the dates of the loan payments.
@@ -59,16 +60,18 @@ class LoanDate:
 
     @staticmethod
     def _set_working_date(date: datetime.date) -> datetime.date:
-        """Checks and return a date after a day off"""
+        """Checks and return a date after a day off.
+
+        If the payment date is a weekend of holiday, the date is transferred
+        to the next business day.
+        """
         while date.weekday() in holidays.WEEKEND or date in holidays.RUS():
             date += datetime.timedelta(days=1)
         return date
 
-    def get_count_days(
-        self,
-        ) -> Sequence[Union[datetime.timedelta, List[datetime.timedelta]]]:
+    def get_count_days(self) -> List[Union[datetime.timedelta, List[datetime.timedelta]]]:
         """Calculates the difference between dates in a list."""
-        days = []
+        days: List[Union[datetime.timedelta, List[datetime.timedelta]]] = []
         dates = self.get_working_dates()
         start_date = self._date
         days.append(dates[0] - start_date)
