@@ -1,6 +1,7 @@
-"""The main entry point"""
+"""The main entry point."""
 
 import argparse
+from typing import List, Type, Union
 
 from amorty.loan import Annuity, StraightLine
 from amorty.loan_format import TableFormat, ExcelFormat
@@ -9,12 +10,16 @@ from amorty.loan_format import TableFormat, ExcelFormat
 def main() -> None:
     """Run application."""
     args = get_arguments()
-    headers = ["Date", "Day", "Principal", "Interest", "Payment", "Balance"]
+    headers = get_headers()
     loan_method = set_loan_method(args.method)
     loan = loan_method(args.amount, args.period, args.rate, args.date)
     format_type = set_format(args.format)
     formatter = format_type(loan.create_loan(), headers)
     formatter.write()
+
+
+def get_headers() -> List:
+    return ["Date", "Day", "Principal", "Interest", "Payment", "Balance"]
 
 
 def get_arguments():
@@ -23,7 +28,7 @@ def get_arguments():
     return parser.parse_args()
 
 
-def set_loan_method(method):
+def set_loan_method(method: str) -> Union[Type["Annuity"], Type["StraightLine"]]:
     """Set type of the loan."""
     annuity_methods = ("a", "ann", "annuity")
     straight_line_methods = ("s", "straight-line", "str", "sl")
@@ -34,16 +39,17 @@ def set_loan_method(method):
     raise AttributeError(f"Invalid method option: {method}")
 
 
-def set_format(format_name: str):
-    """Set output format"""
+def set_format(format_name: str) -> Union[Type["TableFormat"], Type["ExcelFormat"]]:
+    """Set output format."""
     if format_name == "table":
         return TableFormat
     elif format_name == "excel":
         return ExcelFormat
+    raise AttributeError(f"Invalid format option: {format}")
 
 
 def create_parser():
-    """Creates a parser object"""
+    """Creates a parser object."""
     parser = argparse.ArgumentParser(description="Loan amortization tools")
     parser.add_argument(
         "-a",
@@ -90,7 +96,7 @@ def create_parser():
         "--format",
         type=str,
         default="table",
-        help="format output (table/excel/pdf)",
+        help="format output (table/excel)",
     )
     return parser
 

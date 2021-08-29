@@ -1,4 +1,4 @@
-"""Module for loan.py, providing some additional facilities"""
+"""Module for loan.py, providing some additional facilities."""
 
 import calendar
 import datetime
@@ -28,7 +28,6 @@ class LoanDate:
     """
 
     def __init__(self, period: int, date: Union[str, datetime.date]) -> None:
-        """Initialize loan date"""
         self.period = period
         self.date = date
 

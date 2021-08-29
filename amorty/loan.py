@@ -1,10 +1,10 @@
 import datetime
 from abc import ABC, abstractmethod
 from collections import namedtuple
-from typing import Union, List, Iterator
+from typing import Iterator, List, Tuple, Union
 
-from amorty.date import LoanDate
 from amorty import utils
+from amorty.date import LoanDate
 
 
 LoanDetails = namedtuple("LoanDetails", "date day principal interest payment balance")
@@ -19,7 +19,7 @@ class Loan(ABC):
         period: int,
         rate: Union[int, float],
         date: Union[datetime.date, str],
-    ):
+    ) -> None:
         """Construct a new loan.
 
         Args:
@@ -94,7 +94,7 @@ class Loan(ABC):
         days_to_year_ratio = utils.convert_days_to_year(day, date)
         return balance_reminder * interest_rate * days_to_year_ratio
 
-    def create_loan(self) -> Iterator:
+    def create_loan(self) -> Iterator[LoanDetails]:
         loan_amortization = self.amortize()
         dates = self.date.get_working_dates()
         days = utils.clear_days(self.date.get_count_days())
@@ -122,13 +122,13 @@ class Annuity(Loan):
         denominator = (1 + monthly_rate) ** self._period - 1
         return numerator / denominator
 
-    def get_annuity_payment(self):
+    def get_annuity_payment(self) -> float:
         return self._amount * self._get_annuity_coefficient()
 
     def _calculate_principal(self, accrued_interest: float) -> float:
         return self.get_annuity_payment() - accrued_interest
 
-    def amortize(self):
+    def amortize(self) -> Iterator[Tuple[float, ...]]:
         """Calculates amortization for an annuity repayment scheme."""
         balance_reminder = self._amount
         period = self._period
@@ -152,22 +152,22 @@ class Annuity(Loan):
 class StraightLine(Loan):
     """Straight-line loan type.
 
-    Implements the calculation of payments for the differentiated scheme of repayment.
-    The differentiated payment method implies that:
+    Implements the calculation of payments for the straight-line method.
+    The straight-line method implies that:
         - the principal amount is distributed over the period of payment in the equal
           installments;
         - the loan interest accrued on the balance.
 
     Methods
     --------
-    amortize(): Calculates amortization for a differentiated repayment scheme
+    amortize(): Calculates amortization on a straight-line method
     """
 
     def _calculate_principal(self) -> float:
         return self._amount / self._period
 
-    def amortize(self):
-        """Calculates amortization for a differentiated repayment scheme."""
+    def amortize(self) -> Iterator[Tuple[float, ...]]:
+        """Calculates amortization fon a straight-line method."""
         balance_reminder = self._amount
         period = self._period
         date = (x for x in self.date.get_working_dates())

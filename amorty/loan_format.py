@@ -1,14 +1,15 @@
-import xlsxwriter
-
-from abc import ABC, abstractmethod
 import os
+from abc import ABC, abstractmethod
+from typing import Iterator
+
+import xlsxwriter
 from tabulate import tabulate
 
 
 class Format(ABC):
-    """Abstract class for building different format of loan"""
+    """Abstract class for building different format of loan schedule."""
 
-    def __init__(self, loan, header: list[str]) -> None:
+    def __init__(self, loan: Iterator, header: list[str]) -> None:
         self.loan = loan
         self.header = header
 
@@ -18,7 +19,10 @@ class Format(ABC):
 
 
 class TableFormat(Format):
+    """Builds a loan schedule in table format."""
+
     def write(self) -> None:
+        """Output the loan amortization schedule in table format to the terminal."""
         table = self.loan
         print(
             tabulate(
@@ -32,12 +36,17 @@ class TableFormat(Format):
 
 
 class ExcelFormat(Format):
-    def write(self):
+    """Builds a loan schedule in excel format."""
+
+    def write(self) -> None:
+        """Creates and saves the loan amortization schedule in Excel."""
         loan_details = self.loan
         headers = self.header
+
         home_path = os.path.expanduser("~")
         filename = "loan.xlsx"
         file_path = os.path.join(home_path, "Downloads", filename)
+
         with xlsxwriter.Workbook(file_path) as workbook:
             ws = workbook.add_worksheet()
             bold_font = workbook.add_format({"bold": True})

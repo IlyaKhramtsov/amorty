@@ -1,6 +1,6 @@
-import datetime
 import calendar
-from typing import Union, Sequence, List, Iterator
+import datetime
+from typing import Iterator, List, Sequence, Union
 
 
 DAYS_IN_YEAR = {
