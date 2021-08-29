@@ -6,6 +6,9 @@ authors = ["Ilya <ilya.kramt@gmail.com>"]
 readme = "README.md"
 homepage = "https://github.com/IlyaKhramtsov/amorty"
 repository = "https://github.com/IlyaKramtsov/amorty"
+packages = [
+    { include = "amorty" },
+]
 keywords = ["loan", "amortization", "mortgage"]
 classifiers = [
     "Topic :: Office/Business ::Financial"
