@@ -42,7 +42,7 @@ class LoanDate:
         else:
             raise ValueError("Date must be string type or datetime.date type")
 
-    def get_working_dates(self) -> list[datetime.date]:
+    def get_working_dates(self) -> List[datetime.date]:
         """Creates a list of dates excluding weekends."""
         dates = []
         current_date = self._date
