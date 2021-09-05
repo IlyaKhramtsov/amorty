@@ -7,4 +7,14 @@ lint:
 test:
 	@poetry run pytest
 
-.PHONY: install lint test
+coverage:
+	poetry run coverage run --source=amorty -m pytest tests
+	poetry run coverage report -m
+
+build: lint test
+	@poetry build
+
+publish:
+	@poetry publish -r testpypi
+
+.PHONY: install lint test coverage build publish
