@@ -37,4 +37,6 @@ ENV/
 env.bak/
 venv.bak/
 
-
+# Unit test / coverage roports
+.coverage
+htmlcov/

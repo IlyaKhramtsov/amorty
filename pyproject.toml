@@ -11,14 +11,16 @@ packages = [
 ]
 keywords = ["loan", "amortization", "mortgage"]
 classifiers = [
-    "Topic :: Office/Business ::Financial"
+    "Programming Language :: Python :: 3",
+    "Topic :: Office/Business :: Financial"
 ]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 holidays = "^0.11.2"
 tabulate = "^0.8.9"
 XlsxWriter = "^3.0.1"
+progress = "^1.6"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
@@ -27,6 +29,7 @@ flake8-bugbear = "^21.4.3"
 pep8-naming = "^0.12.1"
 black = "^21.7b0"
 mypy = "^0.910"
+coverage = {extras = ["toml"], version = "^5.5"}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -34,3 +37,9 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 amorty = "amorty.__main__:main"
+
+[tool.coverage.run]
+omit = [".*", "*/site-packages/*"]
+
+[tool.coverage.report]
+fail_under = 100
