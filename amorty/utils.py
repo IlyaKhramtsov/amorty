@@ -1,7 +1,10 @@
 import calendar
 import datetime
+import functools
+import time
 from typing import Iterator, List, Sequence, Union
 
+from progress.bar import IncrementalBar
 
 DAYS_IN_YEAR = {
     "common year": 365,
@@ -43,3 +46,18 @@ def clear_days(
             yield (day[0] + day[1]).days
         else:
             yield day.days
+
+
+def show_progress(function):
+    """Makes progress bar."""
+
+    @functools.wraps(function)
+    def wrapper(arg):
+        function(arg)
+        with IncrementalBar("Downloading", suffix="%(percent)d%%") as bar:
+            for _ in range(100):
+                time.sleep(0.01)
+                bar.next()  # noqa: B305
+        print("The file has been downloaded to 'Downloads' folder")
+
+    return wrapper
