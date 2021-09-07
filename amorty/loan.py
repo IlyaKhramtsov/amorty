@@ -34,22 +34,22 @@ class Loan(ABC):
         self.date = LoanDate(period, date)
 
     @property
-    def amount(self):
+    def amount(self) -> Union[int, float]:
         return self._amount
 
     @amount.setter
-    def amount(self, amount: Union[int, float]):
+    def amount(self, amount: Union[int, float]) -> None:
         if isinstance(amount, (int, float)) and amount > 0:
             self._amount = amount
         else:
             raise ValueError("Amount must be int or float type and positive number")
 
     @property
-    def rate(self):
+    def rate(self) -> Union[int, float]:
         return self._rate
 
     @rate.setter
-    def rate(self, rate: Union[int, float]):
+    def rate(self, rate: Union[int, float]) -> None:
         if isinstance(rate, (int, float)) and rate > 0:
             self._rate = rate
         else:
@@ -58,21 +58,21 @@ class Loan(ABC):
             )
 
     @property
-    def period(self):
+    def period(self) -> int:
         return self._period
 
     @period.setter
-    def period(self, period: int):
+    def period(self, period: int) -> None:
         if isinstance(period, int) and period > 0:
             self._period = period
         else:
             raise ValueError("Period must be integer type and positive number")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"\namount: {self._amount}\nrate: {self._rate}%\nperiod: {self._period} months"
 
     @abstractmethod
-    def amortize(self):
+    def amortize(self) -> Iterator[Tuple[float, ...]]:
         pass
 
     def _calculate_accrued_interest(
