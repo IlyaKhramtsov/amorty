@@ -385,6 +385,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "types-tabulate"
+version = "0.8.2"
+description = "Typing stubs for tabulate"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "typing-extensions"
 version = "3.10.0.0"
 description = "Backported and Experimental Type Hints for Python 3.5+"
@@ -410,8 +418,8 @@ python-versions = ">=3.4"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.9"
-content-hash = "a19b3291421ad4771e520c2f77874005b73fb2bd9ca6a6c5d8d2b079b2ea9f6b"
+python-versions = "^3.8"
+content-hash = "f5e59875fc1cdc70a86548f8fd1c4e2afd77675a1d34ab6d32569f358995253f"
 
 [metadata.files]
 appdirs = [
@@ -665,6 +673,10 @@ toml = [
 tomli = [
     {file = "tomli-1.2.1-py3-none-any.whl", hash = "sha256:8dd0e9524d6f386271a36b41dbf6c57d8e32fd96fd22b6584679dc569d20899f"},
     {file = "tomli-1.2.1.tar.gz", hash = "sha256:a5b75cb6f3968abb47af1b40c1819dc519ea82bcc065776a866e8d74c5ca9442"},
+]
+types-tabulate = [
+    {file = "types-tabulate-0.8.2.tar.gz", hash = "sha256:6dbad23ccb92562fcc420c4402799fbb14dfc1cb288bffa84f389d0b12120ba6"},
+    {file = "types_tabulate-0.8.2-py3-none-any.whl", hash = "sha256:456c8066f1ae8ae445a0484aaff9f30d6293e1cb84e8b15e3ad939047c8508bf"},
 ]
 typing-extensions = [
     {file = "typing_extensions-3.10.0.0-py2-none-any.whl", hash = "sha256:0ac0f89795dd19de6b97debb0c6af1c70987fd80a2d62d1958f7e56fcc31b497"},
