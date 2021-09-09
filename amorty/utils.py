@@ -2,7 +2,8 @@ import calendar
 import datetime
 import functools
 import time
-from typing import Iterator, List, Sequence, Union
+from typing import Any, Callable, Iterator, List, Sequence, TypeVar, Union
+from typing import cast
 
 from progress.bar import IncrementalBar
 
@@ -48,16 +49,19 @@ def clear_days(
             yield day.days
 
 
-def show_progress(function):
+F = TypeVar("F", bound=Callable[..., Any])
+
+
+def show_progress(func: F) -> F:
     """Makes progress bar."""
 
-    @functools.wraps(function)
-    def wrapper(arg):
-        function(arg)
+    @functools.wraps(func)
+    def wrapper(arg: Any) -> None:
+        func(arg)
         with IncrementalBar("Downloading", suffix="%(percent)d%%") as bar:
             for _ in range(100):
                 time.sleep(0.01)
                 bar.next()  # noqa: B305
         print("The file has been downloaded to 'Downloads' folder")
 
-    return wrapper
+    return cast(F, wrapper)

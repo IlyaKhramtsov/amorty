@@ -6,17 +6,18 @@ import xlsxwriter
 from tabulate import tabulate
 
 from amorty import utils
+from amorty.loan import LoanDetails
 
 
 class Format(ABC):
     """Abstract class for building different format of loan schedule."""
 
-    def __init__(self, loan: Iterator, header: List[str]) -> None:
+    def __init__(self, loan: Iterator[LoanDetails], header: List[str]) -> None:
         self.loan = loan
         self.header = header
 
     @abstractmethod
-    def write(self):
+    def write(self) -> None:
         pass
 
 
