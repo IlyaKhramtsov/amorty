@@ -3,6 +3,7 @@ install:
 
 lint:
 	@poetry run flake8 amorty
+	@poetry run mypy amorty
 
 test:
 	@poetry run pytest
