@@ -1,9 +1,11 @@
 # Amorty
 
 **Amorty** is a command line interface (CLI) utility for accurate loan calculation and creating amortization schedule. You can output both **straight-line** and **annuity** method of amortization schedules.
-
 > **Amorty builds a loan repayment schedule taking into account Russian specifics.**
 > If the payment date falls on a day off (Saturday, Sunday) or a non-working holiday, then the corresponding amount of debt on the loan is repaid on the next working day after it.
+
+Amotry uses the **Actual / Actual** method when calculating interest payments.
+> The Actual/Actual method uses the actual number of days in each month and year.
  
  #### Methods for Amortization Schedule
 > An amortization schedule is a table that provides the periodic payment information for an amortizing loan
@@ -16,14 +18,14 @@ Amorty has two methods to amortize a loan. Different methods lead to different a
 
 ***Annuity***
 
-Amortization of an annuity loan i a method in which you pay a fixed monthly amount consisting of interest and repayment of the principal. The monthly amount remains unchanged throughout the entire loan term.
+Amortization of an annuity loan is a method in which you pay a fixed monthly amount consisting of interest and repayment of the principal. The monthly amount remains unchanged throughout the entire loan term.
 
 Initially, most of your payments will go towards paying interest, but as the amount of your debt decreases, the interest decreases and more goes towards paying off principal.
 
 ## Installation
 
 ```bash
->>> pip install amorty
+>>> pip install --user --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ amorty
 ```
 
 ## Usage
@@ -32,7 +34,7 @@ Initially, most of your payments will go towards paying interest, but as the amo
 ### As CLI tool
 
 ```bash
->>> amorty -a 1000 -p 5 -r 20 -d 2020-05-15 -m annuity
+$ amorty -a 1000 -p 5 -r 20 -d 2020-05-15 -m annuity
 ==========  =====  ===========  ==========  =========  =========
 Date          Day    Principal    Interest    Payment    Balance
 ==========  =====  ===========  ==========  =========  =========
@@ -66,17 +68,7 @@ Annual interest rate.
 ##### `-d, --date`
 Date on which money is received by the borrower.
 ##### `-m, --method`
-Amortization methods include the 'straight-line' and 'annuity'.
+Amortization methods include the 'straight line' and 'annuity'.
 ##### `-f, --format`
-The amortization schedule output format includes 'table' and 'excel'.
-
-## Formula
-Annuity
-
-$PMT = PV{i (1+i)^n \above{1pt} (1+i)^n -1}$
-
-Where:
--   **PMT** = total payment each period
--   **PV** = present value of loan (loan amount)
--   **i** = period interest rate expressed as a decimal
--   **n** = number of loan payments
+The amortization schedule output format includes 'table' and 'excel'. 
+If the "excel" option is selected, the file will be uploaded to the "Downloads" folder with the name loan.xlsx
