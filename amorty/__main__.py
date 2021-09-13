@@ -4,7 +4,7 @@ import argparse
 from typing import List, Type, Union
 
 from amorty.loan import Annuity, StraightLine
-from amorty.loan_format import TableFormat, ExcelFormat
+from amorty.loan_format import ExcelFormat, TableFormat
 
 
 def main() -> None:
@@ -18,8 +18,9 @@ def main() -> None:
     formatter.write()
 
 
-def get_headers() -> List:
-    return ["Date", "Day", "Principal", "Interest", "Payment", "Balance"]
+def get_headers() -> List[str]:
+    """Returns a list of headers."""
+    return ["Date", "Days", "Principal", "Interest", "Payment", "Balance"]
 
 
 def get_arguments():
@@ -56,7 +57,7 @@ def create_parser():
         "--amount",
         required=True,
         type=float,
-        help="loan amount",
+        help="Loan amount",
     )
 
     parser.add_argument(
@@ -64,7 +65,7 @@ def create_parser():
         "--period",
         required=True,
         type=int,
-        help="loan period in months",
+        help="Loan period in months",
     )
 
     parser.add_argument(
@@ -72,7 +73,7 @@ def create_parser():
         "--rate",
         required=True,
         type=float,
-        help="annual interest rate",
+        help="Annual interest rate",
     )
 
     parser.add_argument(
@@ -80,7 +81,7 @@ def create_parser():
         "--date",
         required=True,
         type=str,
-        help='start date of the loan in format "yyyy-mm-dd"',
+        help='Start date of the loan in format "yyyy-mm-dd"',
     )
 
     parser.add_argument(
@@ -88,7 +89,7 @@ def create_parser():
         "--method",
         default="annuity",
         type=str,
-        help="loan methods (annuity, straight-line)",
+        help="Amortization methods (annuity, straight-line)",
     )
 
     parser.add_argument(
@@ -96,7 +97,7 @@ def create_parser():
         "--format",
         type=str,
         default="table",
-        help="format output (table/excel)",
+        help="The amortization schedule output format (table, excel)",
     )
     return parser
 

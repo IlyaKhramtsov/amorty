@@ -36,7 +36,7 @@ class LoanDate:
         return self._date
 
     @date.setter
-    def date(self, date: Union[str, datetime.date]):
+    def date(self, date: Union[str, datetime.date]) -> None:
         if isinstance(date, (str, datetime.date)):
             self._date = utils.convert_date(date)
         else:
@@ -68,7 +68,9 @@ class LoanDate:
             date += datetime.timedelta(days=1)
         return date
 
-    def get_count_days(self) -> List[Union[datetime.timedelta, List[datetime.timedelta]]]:
+    def get_count_days(
+        self,
+    ) -> List[Union[datetime.timedelta, List[datetime.timedelta]]]:
         """Calculates the difference between dates in a list."""
         days: List[Union[datetime.timedelta, List[datetime.timedelta]]] = []
         dates = self.get_working_dates()
