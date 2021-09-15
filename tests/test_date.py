@@ -1,3 +1,5 @@
+"""LoanDate representation tests."""
+
 import datetime
 
 import pytest
@@ -53,20 +55,26 @@ common_days_before_leap = [
 
 
 def test_wrong_date_format():
+    """Check that LoanDate raises an error on invalid date property."""
     with pytest.raises(ValueError):
         LoanDate(5, 5)
 
 
 def test_string_date():
+    """Check that LoanDate is converting a date string to datetime format."""
     assert LoanDate(5, "2021-07-24").date == datetime.date(2021, 7, 24)
 
 
 def test_datetime_date():
+    """Check that LoanDate doesn't change the format 
+    when passing a datetime-formatted property.
+    """
     loan_date = LoanDate(5, datetime.date(2021, 7, 24))
     assert loan_date.date == datetime.date(2021, 7, 24)
 
 
-def test_check_date():
+def test_set_working_date():
+    """Check that set_working_date returns the next business day."""
     date = datetime.date(2021, 7, 31)
     loan_date = LoanDate(5, date)
     assert loan_date._set_working_date(date) == datetime.date(2021, 8, 2)
@@ -81,6 +89,10 @@ def test_check_date():
     ],
 )
 def test_get_working_dates(period, date, expected):
+    """Check that get_working_dates returns correct dates.
+    In a common year, dates in a transition period from a common year to
+    leap year and from leap year to a common year.
+    """
     loan_date = LoanDate(period, date)
     assert loan_date.get_working_dates() == expected
 
@@ -94,5 +106,9 @@ def test_get_working_dates(period, date, expected):
     ],
 )
 def test_get_count_days(period, date, expected):
+    """Check that get_count_days returns the correct number of days.
+    In a common year, days during the transition from a common year to 
+    a leap year and from a leap year to a common year.
+    """
     loan_date = LoanDate(period, date)
     assert loan_date.get_count_days() == expected
