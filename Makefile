@@ -12,10 +12,15 @@ coverage:
 	poetry run coverage run --source=amorty -m pytest tests
 	poetry run coverage report -m
 
-build: lint test
+selfcheck:
+	@poetry check
+
+check: selfcheck test lint
+
+build: check
 	@poetry build
 
 publish:
 	@poetry publish -r testpypi
 
-.PHONY: install lint test coverage build publish
+.PHONY: install lint test coverage selfcheck check build publish
