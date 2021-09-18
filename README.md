@@ -1,5 +1,9 @@
 # Amorty
 
+[![Github Actions Status](https://github.com/IlyaKhramtsov/amorty/workflows/Python%20CI/badge.svg)](https://github.com/IlyaKhramtsov/amorty/actions)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+
 **Amorty** is a command line interface (CLI) utility for accurate loan calculation and creating amortization schedule. You can output both **straight-line** and **annuity** method of amortization schedules.
 > **Amorty builds a loan repayment schedule taking into account Russian specifics.**
 > If the payment date falls on a day off (Saturday, Sunday) or a non-working holiday, then the corresponding amount of debt on the loan is repaid on the next working day after it.
