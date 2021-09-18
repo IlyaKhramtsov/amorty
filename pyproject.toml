@@ -42,6 +42,3 @@ amorty = "amorty.__main__:main"
 
 [tool.coverage.run]
 omit = [".*", "*/site-packages/*"]
-
-[tool.coverage.report]
-fail_under = 100
