@@ -2,14 +2,15 @@ import pytest
 
 from amorty.loan import StraightLine
 
+
 @pytest.fixture
 def loan():
-    return StraightLine(amount=5000, period=5, rate=20, date='2021-05-15')
+    return StraightLine(amount=5000, period=5, rate=20, date="2021-05-15")
 
 
 def test_calculate_principal(loan):
-    principal = loan._calculate_principal()
-    assert round(principal, 2) == 1000
+    """ """
+    assert round(loan._calculate_principal(), 2) == 1000
 
 
 def test_loan(loan):

@@ -5,7 +5,6 @@ import datetime
 import pytest
 
 from amorty.date import LoanDate
-from amorty.utils import convert_date
 
 common_dates = [
     datetime.date(2021, 8, 16),
@@ -66,7 +65,7 @@ def test_string_date():
 
 
 def test_datetime_date():
-    """Check that LoanDate doesn't change the format 
+    """Check that LoanDate doesn't change the format
     when passing a datetime-formatted property.
     """
     loan_date = LoanDate(5, datetime.date(2021, 7, 24))
@@ -107,7 +106,7 @@ def test_get_working_dates(period, date, expected):
 )
 def test_get_count_days(period, date, expected):
     """Check that get_count_days returns the correct number of days.
-    In a common year, days during the transition from a common year to 
+    In a common year, days during the transition from a common year to
     a leap year and from a leap year to a common year.
     """
     loan_date = LoanDate(period, date)
